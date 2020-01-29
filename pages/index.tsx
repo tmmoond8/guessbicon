@@ -1,15 +1,19 @@
-import Sample from '../components/Sample';
-import Link from 'next/link';
+import { withRouter } from 'next/router';
+import Game from '../components/Game';
+import { WithRouterProps } from 'next/dist/client/with-router';
 
-const Index = () => (
-  <div>
-    <Sample text="Hello Next.js"/>
-    <h3>링크로 갑시다.</h3>
-    <ul>
-      <li><Link href="/dog">Dog</Link></li>
-      <li><Link href="/cat">Cat</Link></li>
-    </ul>
-  </div>
-);
+interface IProps extends WithRouterProps {}
 
-export default Index;
+const games = [
+  { img: 'https://i.imgur.com/7bNfhgP.jpg', answer: 'react' },
+  { img: 'https://i.imgur.com/vv4Wnvp.jpg', answer: 'react' },
+  { img: 'https://i.imgur.com/dMD8rGg.jpg', answer: 'react' },
+];
+
+const Index = (props: IProps) => {
+  const { router: { query: { step = 0 } } } = props;
+  return (
+    <Game games={games} step={step.toString()}/>
+  );
+};
+export default withRouter(Index);
